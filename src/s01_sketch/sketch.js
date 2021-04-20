@@ -2,7 +2,6 @@
  *
  *
  */
-
 const requiredTime = 1000;
 let travelDistance;
 const px1 = 300;
@@ -21,6 +20,7 @@ function setup() {
    */
 
   createCanvas(1000, 800);
+  console.log('Its working');
 }
 
 function draw() {
