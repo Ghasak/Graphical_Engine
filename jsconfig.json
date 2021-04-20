@@ -1,0 +1,9 @@
+{
+  "include": [
+    "*.js",
+    "./src/s01_sketch/*.js",
+    "libraries/*.js",
+    "/Users/ghasak.ibrahim/.vscode/extensions/samplavigne.p5-vscode-1.2.6/p5types/global.d.ts"
+  ]
+}
+
