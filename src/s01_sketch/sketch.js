@@ -5,17 +5,17 @@
   ▒█░░▒█ ▀░░▀ ▀▀▀ ▀░░▀ 　 ▒█░░░ ▀▀▀ ▀░░▀ ░░▀░░ ▀░░ ▀▀▀▀ ▀░▀▀ ▀░░░▀
  *
  */
-const requiredTime = 10; // 1 sec = 1000 millisec.
+const requiredTime = 1; // 1 sec = 1000 millisec.
 let travelDistance;
 let timeTraveled;
 timeTraveled = 0;
-const px1 = 200;
-const py1 = 300;
+const px1 = 300;
+const py1 = 200;
 const px2 = 500;
 const py2 = 500;
 
-let distanceX = 200;
-let distanceY = 300;
+let distanceX = 300;
+let distanceY = 200;
 
 const xc = px2 - px1;
 const yc = py2 - py1;
@@ -30,6 +30,7 @@ const fps = 60;
 let switchx;
 switchx = false;
 let stoppingTime;
+let accumlativeCycles = 0;
 
 function setup() {
   /** It will used for setup your objects
@@ -92,16 +93,18 @@ function arrivalParticle() {
         500,
         600,
     );
+    accumlativeCycles += 1;
+    text('Cycles No. : ' + accumlativeCycles, 500, 700);
     // textSize(10);
   }
 }
 
 function particleX() {
   fill([123, 100, 140]);
-  ellipse(200, 300, 100, 100);
+  ellipse(300, 200, 100, 100);
   fill([212, 232, 123]);
   ellipse(500, 500, 100, 100);
-  const ld = normalizeVector(px2, py2, px1, px2);
+  const ld = normalizeVector(px1, py1, px2, py2);
 
   distanceX = distanceX + vx * (xc / ld) * deltaTime;
   distanceY = distanceY + vy * (yc / ld) * deltaTime;
@@ -110,8 +113,8 @@ function particleX() {
   ellipse(
       distanceX,
       distanceY,
-      50 + sin(frameCount / 10) * 20,
-      50 + sin(frameCount / 10) * 20,
+      50 + Math.sin(frameCount / 10) * 20,
+      50 + Math.sin(frameCount / 10) * 20,
   );
   fill(10, 10, 10);
 
