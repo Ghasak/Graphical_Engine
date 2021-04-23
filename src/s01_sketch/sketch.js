@@ -51,7 +51,7 @@ function draw() {
    *
    */
 
-  background(100, 200, 200);
+  background(100, 140, 130);
   screenStats();
   checkBoudaries();
   arrivalParticle();
