@@ -1,20 +1,22 @@
-/*
+/** ***************************************************************************
  *
-  ▒█▀▄▀█ █▀▀█ ░▀░ █▀▀▄ 　 ▒█▀▀█ █░░ █▀▀█ ▀▀█▀▀ █▀▀ █▀▀█ █▀▀█ █▀▄▀█
-  ▒█▒█▒█ █▄▄█ ▀█▀ █░░█ 　 ▒█▄▄█ █░░ █▄▄█ ░░█░░ █▀▀ █░░█ █▄▄▀ █░▀░█
-  ▒█░░▒█ ▀░░▀ ▀▀▀ ▀░░▀ 　 ▒█░░░ ▀▀▀ ▀░░▀ ░░▀░░ ▀░░ ▀▀▀▀ ▀░▀▀ ▀░░░▀
+        ▒█▀▄▀█ █▀▀█ ░▀░ █▀▀▄ 　 ▒█▀▀█ █░░ █▀▀█ ▀▀█▀▀ █▀▀ █▀▀█ █▀▀█ █▀▄▀█
+        ▒█▒█▒█ █▄▄█ ▀█▀ █░░█ 　 ▒█▄▄█ █░░ █▄▄█ ░░█░░ █▀▀ █░░█ █▄▄▀ █░▀░█
+        ▒█░░▒█ ▀░░▀ ▀▀▀ ▀░░▀ 　 ▒█░░░ ▀▀▀ ▀░░▀ ░░▀░░ ▀░░ ▀▀▀▀ ▀░▀▀ ▀░░░▀
  *
- */
-const requiredTime = 30; // 1 sec = 1000 milliseconds.
+  *****************************************************************************
+*/
+// define global variables
+const requiredTime = 10; // 1 sec = 1000 milliseconds.
 let travelDistance;
 let timeTraveled;
 timeTraveled = 0;
-const px1 = 100;
+const px1 = 400;
 const py1 = 100;
-const px2 = 500;
-const py2 = 600;
-const r1 = 50;
-const r2 = 50;
+const px2 = 800;
+const py2 = 500;
+const r1 = 10;
+const r2 = 10;
 
 let distanceX = px1;
 let distanceY = py1;
@@ -34,6 +36,7 @@ const fps = 60;
 let stoppingTime;
 let accumlativeCycles = 0;
 
+// Setup canvas
 function setup() {
   /** It will used for setup your objects
    *
@@ -42,7 +45,7 @@ function setup() {
   createCanvas(1000, 800);
   frameRate(60);
 }
-
+// Dyanmic 60 fps draw on canvas
 function draw() {
   /* Drawing function where you can get all the objects moving
    *
@@ -50,11 +53,74 @@ function draw() {
 
   background(100, 200, 200);
   screenStats();
-  particleX();
   checkBoudaries();
-  timeelapsed();
   arrivalParticle();
+  timeelapsed();
+  particleX();
 }
+// Functions and  utilities
+function particleX() {
+  line(px1, py1, px2, py2);
+  fill([12, 100, 20]);
+  fill([123, 100, 140]);
+  ellipse(
+      px1,
+      py1,
+      r1 + Math.sin(frameCount / 10) * 20,
+      r1 + Math.sin(frameCount / 10) * 20,
+  );
+  fill([0, 200, 0]);
+  ellipse(
+      px2,
+      py2,
+      r2 + Math.sin(frameCount / 10) * 20,
+      r2 + Math.sin(frameCount / 10) * 20,
+  );
+
+  const ld = normalizeVector(px1, py1, px2, py2);
+
+  distanceX = distanceX + vx * (xc / ld) * deltaTime;
+  distanceY = distanceY + vy * (yc / ld) * deltaTime;
+
+  fill([120, 150, 144]);
+  ellipse(
+      distanceX,
+      distanceY,
+      50 + Math.sin(frameCount / 10) * 20,
+      50 + Math.sin(frameCount / 10) * 20,
+  );
+  fill(10, 10, 10);
+
+  text(
+      'Position:<' + distanceX.toFixed(2) + ',' + distanceY.toFixed(2) + '>',
+      distanceX,
+      distanceY,
+  );
+}
+
+function timeelapsed() {
+  const fc = frameCount;
+  calculateTime += deltaTime / 1000;
+  text(
+      'Time Ellapsed:' + calculateTime.toFixed(2),
+      distanceX - 300,
+      distanceY - 50,
+  );
+  text('FrameCount: ' + parseFloat(fc), distanceX + 20, distanceY + 20);
+  text(
+      'Ellapsed Time: ' + (fc / fps).toFixed(3),
+      distanceX - 300,
+      distanceY - 75,
+  );
+  timeTraveled = timeTraveled + deltaTime;
+  text(
+      'Real Time Traveled (sec): ' + (timeTraveled / 1000).toFixed(2),
+      distanceX - 300,
+      distanceY - 90,
+  );
+  line(distanceX, distanceY, distanceX - 150, distanceY - 50);
+}
+
 function normalizeVector(px1, py1, px2, py2) {
   const L = Math.sqrt((px1 - px2) ** 2 + (py1 - py2) ** 2);
   return L;
@@ -71,9 +137,9 @@ function checkBoudaries() {
   }
 }
 
+// textSize(20);
 function arrivalParticle() {
   if (distanceX >= px2 && distanceY >= py2) {
-    // textSize(20);
     switchx = true;
     stoppingTime = timeTraveled;
   }
@@ -81,13 +147,21 @@ function arrivalParticle() {
   if (switchx === true) {
     text(
         'Arrive at : ' + (stoppingTime / 1000).toFixed(2) + ' Sec. ',
-        500,
-        600,
+        px2 - 150,
+        py2 + 30,
     );
     accumlativeCycles += 1;
-    text('Cycles No. : ' + accumlativeCycles, 500, 700);
+    text('Cycles No. : ' + accumlativeCycles, px2 - 150, py2 + 10);
     // textSize(10);
   }
 }
 
-
+function screenStats() {
+  fill([0, 0, 0]);
+  text('FPS: ' + int(getFrameRate()), 900, 20);
+  text(
+      'Time Delta \n at each frame:' + parseInt(deltaTime, 10),
+      width / 2 + 400,
+      height / 4 - 150,
+  );
+}

@@ -1,32 +1,3 @@
-function particleX() {
-  line(px1, py1, px2, py2);
-  fill([12, 100, 20]);
-  fill([123, 100, 140]);
-  ellipse(px1, py1, r1, r1);
-  fill([0, 200, 0]);
-  ellipse(px2, py2, r2, r2);
-
-  const ld = normalizeVector(px1, py1, px2, py2);
-
-  distanceX = distanceX + vx * (xc / ld) * deltaTime;
-  distanceY = distanceY + vy * (yc / ld) * deltaTime;
-
-  fill([120, 150, 144]);
-  ellipse(
-      distanceX,
-      distanceY,
-      50 + Math.sin(frameCount / 10) * 20,
-      50 + Math.sin(frameCount / 10) * 20,
-  );
-  fill(10, 10, 10);
-
-  text(
-      'Position:<' + distanceX.toFixed(2) + ',' + distanceY.toFixed(2) + '>',
-      distanceX,
-      distanceY,
-  );
-}
-
 function timeelapsed() {
   const fc = frameCount;
   calculateTime += deltaTime / 1000;
