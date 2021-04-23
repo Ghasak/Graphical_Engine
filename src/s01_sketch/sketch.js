@@ -5,17 +5,19 @@
   ▒█░░▒█ ▀░░▀ ▀▀▀ ▀░░▀ 　 ▒█░░░ ▀▀▀ ▀░░▀ ░░▀░░ ▀░░ ▀▀▀▀ ▀░▀▀ ▀░░░▀
  *
  */
-const requiredTime = 1; // 1 sec = 1000 millisec.
+const requiredTime = 30; // 1 sec = 1000 milliseconds.
 let travelDistance;
 let timeTraveled;
 timeTraveled = 0;
-const px1 = 300;
-const py1 = 200;
+const px1 = 100;
+const py1 = 100;
 const px2 = 500;
-const py2 = 500;
+const py2 = 600;
+const r1 = 50;
+const r2 = 50;
 
-let distanceX = 300;
-let distanceY = 200;
+let distanceX = px1;
+let distanceY = py1;
 
 const xc = px2 - px1;
 const yc = py2 - py1;
@@ -26,9 +28,9 @@ let vx = travelDistance / (requiredTime * 1000); // 1000 millisecond
 let vy = travelDistance / (requiredTime * 1000);
 let calculateTime;
 calculateTime = 0;
-const fps = 60;
 let switchx;
 switchx = false;
+const fps = 60;
 let stoppingTime;
 let accumlativeCycles = 0;
 
@@ -100,10 +102,13 @@ function arrivalParticle() {
 }
 
 function particleX() {
+  line(px1, py1, px2, py2);
+  fill([12, 100, 20]);
   fill([123, 100, 140]);
-  ellipse(300, 200, 100, 100);
-  fill([212, 232, 123]);
-  ellipse(500, 500, 100, 100);
+  ellipse(px1, py1, r1, r1);
+  fill([0, 200, 0]);
+  ellipse(px2, py2, r2, r2);
+
   const ld = normalizeVector(px1, py1, px2, py2);
 
   distanceX = distanceX + vx * (xc / ld) * deltaTime;
