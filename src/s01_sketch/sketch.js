@@ -7,7 +7,7 @@
   *****************************************************************************
 */
 // define global variables
-const requiredTime = 10; // 1 sec = 1000 milliseconds.
+const requiredTime = 50; // 1 sec = 1000 milliseconds.
 let travelDistance;
 let timeTraveled;
 timeTraveled = 0;
@@ -57,6 +57,7 @@ function draw() {
   arrivalParticle();
   timeelapsed();
   particleX();
+  console.log('How Many Frames per Second : ' + requestAnimFrame());
 }
 // Functions and  utilities
 function particleX() {
@@ -165,3 +166,22 @@ function screenStats() {
       height / 4 - 150,
   );
 }
+
+let lastCalledTime;
+let fps2;
+// Function to calcuate the frame per second
+function requestAnimFrame() {
+  if (!lastCalledTime) {
+    lastCalledTime = Date.now();
+    fps2 = 0;
+    return fps;
+  }
+  delta = (Date.now() - lastCalledTime) / 1000;
+  lastCalledTime = Date.now();
+  fps2 = 1 / delta;
+  // console.clear();
+  console.log('\n'.repeat('100'));
+  return parseInt(fps2);
+}
+
+// My clear console function
